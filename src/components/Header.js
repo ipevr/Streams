@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import GoogleAuth from "./GoogleAuth";
 
 const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          Streamer
+          Streamingo
         </Link>
         <button
           className="navbar-toggler"
@@ -25,6 +26,9 @@ const Header = () => {
               <Link to="/" className="nav-link active">
                 All Streams
               </Link>
+            </li>
+            <li className="nav-item">
+              <GoogleAuth />
             </li>
           </ul>
         </div>
