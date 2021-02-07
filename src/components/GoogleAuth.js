@@ -1,8 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { signIn, signOut } from "../actions";
 
 class GoogleAuth extends React.Component {
-  state = { isSignedIn: null };
-
   componentDidMount() {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
@@ -13,32 +13,36 @@ class GoogleAuth extends React.Component {
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.auth.isSignedIn.listen(this.onAuthChange);
-          this.setState({ isSignedIn: this.auth.isSignedIn.get() });
+          this.onAuthChange(this.auth.isSignedIn.get());
         });
     });
   }
 
-  onAuthChange = () => {
-    this.setState({ isSignedIn: this.auth.isSignedIn.get() });
+  onAuthChange = (isSignedIn) => {
+    if (isSignedIn) {
+      this.props.signIn();
+    } else {
+      this.props.signOut();
+    }
   };
 
   renderAuthButton() {
-    if (this.state.isSignedIn === null) {
+    if (this.props.isSignedIn === null) {
       return null;
     }
 
     return (
       <button
         onClick={() =>
-          this.state.isSignedIn ? this.auth.signOut() : this.auth.signIn()
+          this.props.isSignedIn ? this.auth.signOut() : this.auth.signIn()
         }
         type="button"
         className={`btn ${
-          this.state.isSignedIn ? "btn-secondary" : "btn-primary"
+          this.props.isSignedIn ? "btn-secondary" : "btn-primary"
         }`}
       >
-        <i class="fab fa-google"></i>
-        {this.state.isSignedIn ? " Sign Out" : "  Sign In"}
+        <i className="fab fa-google"></i>
+        {this.props.isSignedIn ? " Sign Out" : "  Sign In"}
       </button>
     );
   }
@@ -48,4 +52,8 @@ class GoogleAuth extends React.Component {
   }
 }
 
-export default GoogleAuth;
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn };
+};
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
