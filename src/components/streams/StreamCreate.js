@@ -12,7 +12,6 @@ class StreamCreate extends React.Component {
   }
 
   renderInput = ({ input, label, meta }) => {
-    console.log(meta);
     return (
       <div className="mb-3">
         <label className="form-label fw-bold">{label}</label>
