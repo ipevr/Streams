@@ -1,7 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const StreamCreate = () => {
-  return <div>StreamCreate</div>;
+const StreamEdit = (props) => {
+  console.log(props);
+  return (
+    <div>
+      <div>{props.stream.title}</div>
+      <div>{props.stream.description}</div>
+    </div>
+  );
 };
 
-export default StreamCreate;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    stream: state.streams[ownProps.match.params.id],
+  };
+};
+
+export default connect(mapStateToProps)(StreamEdit);

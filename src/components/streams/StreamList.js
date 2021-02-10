@@ -12,7 +12,12 @@ class StreamList extends React.Component {
     if (this.props.userId === stream.userId) {
       return (
         <div>
-          <button className="btn btn-primary m-1">Edit</button>
+          <Link
+            to={`streams/edit/${stream.id}`}
+            className="btn btn-primary m-1"
+          >
+            Edit
+          </Link>
           <button className="btn btn-danger ms-1">Delete</button>
         </div>
       );
