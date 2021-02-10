@@ -12,10 +12,11 @@ class StreamCreate extends React.Component {
   }
 
   renderInput = ({ input, label, meta }) => {
+    console.log("Meta: ", meta);
     return (
       <div className="mb-3">
         <label className="form-label fw-bold">{label}</label>
-        <input {...input} className="form-control" />
+        <input {...input} className="form-control" autoComplete="off" />
         {this.renderError(meta)}
       </div>
     );
