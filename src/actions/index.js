@@ -27,6 +27,10 @@ export const createStream = (formValues) => async (dispatch, getState) => {
   const response = await streams.post("/streams", { ...formValues, userId });
 
   dispatch({ type: CREATE_STREAM, payload: response.data });
+  console.log(response);
+  // Do some programmatic navigation to get the user back to the root route
+  // if the response of creating the stream was successfull.
+  // response.statusText === "Created"
 };
 
 export const fetchStreams = () => async (dispatch) => {
