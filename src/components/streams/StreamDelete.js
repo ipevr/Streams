@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { fetchStream, deleteStream } from "../../actions";
 import Modal from "../Modal";
@@ -9,8 +10,12 @@ class StreamDelete extends React.Component {
     this.props.fetchStream(this.props.match.params.id);
   }
 
-  onModalDismiss = () => {
+  onDismiss = () => {
     history.push("/");
+  };
+
+  onConfirm = () => {
+    this.props.deleteStream(this.props.match.params.id);
   };
 
   render() {
@@ -20,27 +25,22 @@ class StreamDelete extends React.Component {
 
     const actions = (
       <React.Fragment>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={this.onModalDismiss}
-        >
+        <Button variant="secondary" onClick={this.onDismiss}>
           Cancel
-        </button>
-        <button type="button" className="btn btn-danger">
+        </Button>
+        <Button variant="danger" onClick={this.onConfirm}>
           Delete
-        </button>
+        </Button>
       </React.Fragment>
     );
 
     return (
       <div>
-        StreamDelete
         <Modal
           title="Delete Stream"
           content={`Are you sure you want to delete the stream ${this.props.stream.title}?`}
           actions={actions}
-          onDismiss={this.onModalDismiss}
+          onDismiss={this.onDismiss}
         />
       </div>
     );

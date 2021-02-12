@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Button } from "react-bootstrap";
 import { Field, reduxForm } from "redux-form";
 
 class StreamForm extends React.Component {
@@ -11,11 +12,11 @@ class StreamForm extends React.Component {
 
   renderInput = ({ input, label, meta }) => {
     return (
-      <div className="mb-3">
-        <label className="form-label fw-bold">{label}</label>
-        <input {...input} className="form-control" autoComplete="off" />
+      <Form.Group>
+        <Form.Label className="font-weight-bold">{label}</Form.Label>
+        <Form.Control {...input} autoComplete="off" />
         {this.renderError(meta)}
-      </div>
+      </Form.Group>
     );
   };
 
@@ -25,15 +26,17 @@ class StreamForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <Field name="title" component={this.renderInput} label="Enter Title" />
         <Field
           name="description"
           component={this.renderInput}
           label="Enter Description"
         />
-        <button className="btn btn-primary">Submit</button>
-      </form>
+        <Button variant="primary" size="lg" type="submit">
+          Submit
+        </Button>
+      </Form>
     );
   }
 }

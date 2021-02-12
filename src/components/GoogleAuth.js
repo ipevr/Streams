@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { signIn, signOut } from "../actions";
 
@@ -32,18 +33,15 @@ class GoogleAuth extends React.Component {
     }
 
     return (
-      <button
+      <Button
         onClick={() =>
           this.props.isSignedIn ? this.auth.signOut() : this.auth.signIn()
         }
-        type="button"
-        className={`btn ${
-          this.props.isSignedIn ? "btn-secondary" : "btn-primary"
-        }`}
+        variant={`${this.props.isSignedIn ? "secondary" : "primary"}`}
       >
         <i className="fab fa-google"></i>
         {this.props.isSignedIn ? " Sign Out" : "  Sign In"}
-      </button>
+      </Button>
     );
   }
 

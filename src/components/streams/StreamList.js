@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, ListGroup, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchStreams } from "../../actions";
@@ -11,20 +12,18 @@ class StreamList extends React.Component {
   renderAdmin(stream) {
     if (this.props.userId === stream.userId) {
       return (
-        <div>
-          <Link
-            to={`streams/edit/${stream.id}`}
-            className="btn btn-primary m-1"
-          >
-            Edit
+        <>
+          <Link to={`streams/edit/${stream.id}`} className="mr-3">
+            <Button variant="primary" size="lg">
+              Edit
+            </Button>
           </Link>
-          <Link
-            to={`streams/delete/${stream.id}`}
-            className="btn btn-danger ms-1"
-          >
-            Delete
+          <Link to={`streams/delete/${stream.id}`}>
+            <Button variant="danger" size="lg">
+              Delete
+            </Button>
           </Link>
-        </div>
+        </>
       );
     }
     return null;
@@ -34,8 +33,10 @@ class StreamList extends React.Component {
     if (this.props.isSignedIn) {
       return (
         <div className="d-flex justify-content-end">
-          <Link to="/streams/new" className="btn btn-secondary">
-            Create new stream
+          <Link to="/streams/new">
+            <Button variant="secondary" size="lg">
+              Create new stream
+            </Button>
           </Link>
         </div>
       );
@@ -45,32 +46,35 @@ class StreamList extends React.Component {
   renderList() {
     return this.props.streams.map((stream) => {
       return (
-        <li key={stream.id} className="list-group-item d-flex pe-0">
+        <ListGroup.Item
+          key={stream.id}
+          className="d-flex align-items-center pr-0"
+        >
           <i
-            className="bi bi-camera-reels-fill me-3 align-self-start"
+            className="bi bi-camera-reels-fill mr-3"
             style={{ fontSize: "2rem" }}
           ></i>
-          <div className="align-self-start flex-fill">
+          <div className="flex-fill">
             <h4>{stream.title}</h4>
-            <p>{stream.description}</p>
+            <p className="mb-0">{stream.description}</p>
           </div>
           {this.renderAdmin(stream)}
-        </li>
+        </ListGroup.Item>
       );
     });
   }
 
   render() {
     return (
-      <div className="container-fluid">
+      <Container fluid>
         <h2>Streams:</h2>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item d-flex"></li>
+        <ListGroup variant="flush">
+          <ListGroup.Item></ListGroup.Item>
           {this.renderList()}
-          <li className="list-group-item d-flex"></li>
-        </ul>
+          <ListGroup.Item></ListGroup.Item>
+        </ListGroup>
         {this.renderAdminCreate()}
-      </div>
+      </Container>
     );
   }
 }
