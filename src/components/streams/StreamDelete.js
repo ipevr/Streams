@@ -1,48 +1,53 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchStream, deleteStream } from "../../actions";
-import Modal from "../Modal";
 import history from "../../history";
+import Modal from "../Modal";
 
 class StreamDelete extends React.Component {
   componentDidMount() {
     this.props.fetchStream(this.props.match.params.id);
   }
 
-  onDismiss = () => {
-    history.push("/");
-  };
-
   onConfirm = () => {
     this.props.deleteStream(this.props.match.params.id);
   };
 
-  render() {
-    if (!this.props.stream) {
-      return <div>Loading...</div>;
-    }
+  onDismiss = () => {
+    history.push("/");
+  };
 
-    const actions = (
+  renderActions() {
+    return (
       <React.Fragment>
-        <Button variant="secondary" onClick={this.onDismiss}>
-          Cancel
-        </Button>
+        <Link to="/">
+          <Button variant="secondary">Cancel</Button>
+        </Link>
         <Button variant="danger" onClick={this.onConfirm}>
           Delete
         </Button>
       </React.Fragment>
     );
+  }
 
+  renderContent() {
+    if (!this.props.stream) {
+      return "Are you sure you want to delete this stream?";
+    } else {
+      return `Are you sure you want to delete the stream with title: "${this.props.stream.title}"?`;
+    }
+  }
+
+  render() {
     return (
-      <div>
-        <Modal
-          title="Delete Stream"
-          content={`Are you sure you want to delete the stream ${this.props.stream.title}?`}
-          actions={actions}
-          onDismiss={this.onDismiss}
-        />
-      </div>
+      <Modal
+        title="Delete Stream"
+        content={this.renderContent()}
+        actions={this.renderActions()}
+        onDismiss={this.onDismiss}
+      />
     );
   }
 }
