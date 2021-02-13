@@ -55,7 +55,9 @@ class StreamList extends React.Component {
             style={{ fontSize: "2rem" }}
           ></i>
           <div className="flex-fill">
-            <h4>{stream.title}</h4>
+            <Link to={`/streams/${stream.id}`}>
+              <h4>{stream.title}</h4>
+            </Link>
             <p className="mb-0">{stream.description}</p>
           </div>
           {this.renderAdmin(stream)}
