@@ -1,11 +1,17 @@
 import React from "react";
-import { Card, Container, Image, Button } from "react-bootstrap";
+import flv from "flv.js";
+import { Card, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchStream } from "../../actions";
-import playButton from "../../images/play-button.png";
 
 class StreamShow extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.videoRef = React.createRef();
+  }
+
   componentDidMount() {
     this.props.fetchStream(this.props.match.params.id);
   }
@@ -14,12 +20,7 @@ class StreamShow extends React.Component {
     return (
       <Card>
         <Card.Body>
-          <Container
-            className="d-flex align-items-center justify-content-center"
-            style={{ height: "300px" }}
-          >
-            <Image src={playButton} style={{ height: "100px" }} />
-          </Container>
+          <video ref={this.videoRef} style={{ width: "100%" }} controls />
           <Card.Title>{this.props.stream.title}</Card.Title>
           <Card.Text>{this.props.stream.description}</Card.Text>
           <Link to="/">
